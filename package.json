@@ -1,38 +1,35 @@
 {
   "name": "dj",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prestart": "babel ./src --out-dir build",
+    "start": "node ./src/bin/www",
+    "startdev": "nodemon --exec babel-node ./src/bin/www",
+    "lint": "./node_modules/.bin/eslint ./src",
+    "pretty": "prettier --write '**/*.{js,json}' '!node_modules/**'",
+    "postpretty": "yarn lint --fix"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/deangelacgn/dj.git"
-  },
-  "author": "Deangela Neves",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/deangelacgn/dj/issues"
-  },
-  "homepage": "https://github.com/deangelacgn/dj#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "cookie-parser": "^1.4.5",
+    "debug": "~2.6.9",
+    "eslint-config-prettier": "^6.15.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "eslint": "7.13.0",
-    "eslint-config-prettier": "6.15.0",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.5.1",
-    "prettier": "2.1.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.6",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2"
   }
 }

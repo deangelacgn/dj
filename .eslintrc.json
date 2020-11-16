@@ -1,35 +1,35 @@
 {
-    "extends": [
-      "eslint:recommended",
-      "prettier"
+  "extends": ["eslint:recommended", "prettier"],
+  "rules": {
+    "no-console": "warn",
+    "no-var": "error",
+    "prefer-const": "error",
+    "eqeqeq": "warn",
+    "semi": "error",
+    "no-unneeded-ternary": "error",
+    "no-irregular-whitespace": "error",
+    "unicode-bom": ["error", "never"],
+    "linebreak-style": ["error", "unix"],
+    "no-multiple-empty-lines": [
+      "error",
+      { "max": 2, "maxBOF": 0, "maxEOF": 1 }
     ],
-    "rules": {
-      "no-console": "warn",
-      "no-var": "error",
-      "prefer-const": "error",
-      "eqeqeq": "warn",
-      "semi": "error",
-      "no-unneeded-ternary": "error",
-      "no-irregular-whitespace": "error",
-      "unicode-bom": ["error", "never"],
-      "linebreak-style": ["error", "unix"],
-      "no-multiple-empty-lines": ["error", { "max": 2, "maxBOF": 0, "maxEOF": 1 }],
-      "indent": ["error", 2],
-      "no-tabs": "error",
-      "curly": "error",
-      "space-before-blocks": "error",
-      "object-curly-spacing": ["error", "always"],
-      "block-spacing": "error",
-      "key-spacing": "error",
-      "comma-dangle": ["error", "always-multiline"],
-    },
-    "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "script"
-    },
-    "env": {
-      "es6": true,
-      "browser": false,
-      "node": true
-    }
+    "indent": ["error", 2],
+    "no-tabs": "error",
+    "curly": "error",
+    "space-before-blocks": "error",
+    "object-curly-spacing": ["error", "always"],
+    "block-spacing": "error",
+    "key-spacing": "error",
+    "comma-dangle": ["error", "always-multiline"]
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "browser": false,
+    "node": true
   }
+}
