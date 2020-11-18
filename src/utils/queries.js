@@ -14,4 +14,4 @@ export const insertMessages = `
 `;
 
 
-export const dropMessageTable = 'DROP TABLE messages';
+export const dropMessagesTable = 'DROP TABLE messages';

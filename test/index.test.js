@@ -1,8 +1,8 @@
-import { expect, server, BASE_URL } from './setup';
+import { expect, agent, BASE_URL } from './setup';
 
 describe('Index page test', () => {
   it('gets base url', (done) => {
-    server
+    agent
       .get(`${BASE_URL}/`)
       .expect(200)
       .end((err, res) => {
