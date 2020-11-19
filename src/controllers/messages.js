@@ -4,7 +4,7 @@ const messagesModel = new Model('messages');
 
 export const messagesPage = async (req, res, next) => {
   try {
-    const data = await messagesModel.select('name, message', `WHERE $1=` , req.body);
+    const data = await messagesModel.select('name, message');
     res.status(200).json({ messages: data.rows });
   } catch (err) {
     next(err);
