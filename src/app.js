@@ -10,5 +10,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/v1', indexRouter);
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    name: err.name,
+    message: err.message,
+    stack: err.stack });
+});
 
 export default app;
