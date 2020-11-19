@@ -22,6 +22,7 @@ describe('Messages', () => {
       .send(data)
       .expect(200)
       .end((err, res) => {
+        if (err) { return done(err); };
         expect(res.status).to.equal(200);
         expect(res.body.messages).to.be.instanceOf(Array);
         res.body.messages.forEach(m => {
