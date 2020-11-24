@@ -3,8 +3,8 @@ export const createInventoryTable = `
   CREATE TABLE IF NOT EXISTS inventory (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
-    available_quantity INT NOT NULL,
-    cost_per_unit INT NOT NULL
+    available_quantity INTEGER NOT NULL,
+    cost_per_unit DECIMAL(6, 2) NOT NULL
   )
 `;
 

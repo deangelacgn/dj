@@ -15,7 +15,7 @@ describe('Messages', () => {
         done();
       });
   });
-  it('posts messages', done => {
+  it('post messages', done => {
     const data = { name: 'some name', message: 'new message' };
     agent
       .post(`${BASE_URL}/messages`)
