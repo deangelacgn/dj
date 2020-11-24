@@ -1,6 +1,6 @@
-import Model from '../models/model';
+import { MessagesModel } from '../models';
 
-const messagesModel = new Model('messages');
+const messagesModel = new MessagesModel();
 
 export const messagesPage = async (req, res, next) => {
   try {
