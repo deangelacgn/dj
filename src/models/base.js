@@ -1,9 +1,9 @@
 import { pool } from './pool';
 
-class Model {
-  constructor(table) {
+export class BaseModel {
+  constructor(tableName) {
     this.pool = pool;
-    this.table = table;
+    this.table = tableName;
     this.pool.on('error', (err, client) => `Error, ${err}, on idle client${client}`);
   }
 
@@ -14,15 +14,4 @@ class Model {
     }
     return this.pool.query(query, values);
   }
-
-  async insertWithReturn(columns, values) {
-    const query = `
-          INSERT INTO ${this.table}(${columns})
-          VALUES ($1, $2)
-          RETURNING id, ${columns}
-      `;
-    return this.pool.query(query, values);
-  }
 }
-
-export default Model;
