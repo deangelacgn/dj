@@ -1,6 +1,6 @@
 import Model from '../models/model';
 
-const inventoryModel = Model('inventory');
+const inventoryModel = new Model('inventory');
 
 export const listProducts = async (req, res, next) => {
   try {
