@@ -4,14 +4,7 @@ export const createMessageTable = `
     id SERIAL PRIMARY KEY,
     name VARCHAR DEFAULT '',
     message VARCHAR NOT NULL
-  )
+  );
 `;
-
-export const insertMessages = `
-  INSERT INTO  messages(name, message)
-  VALUES ('dj', 'some message'),
-        ('de', 'some other message')
-`;
-
 
 export const dropMessagesTable = 'DROP TABLE messages';

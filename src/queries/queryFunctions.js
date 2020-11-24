@@ -1,6 +1,5 @@
 import { pool } from '../models/pool';
 import {
-  insertMessages,
   dropMessagesTable,
   createMessageTable,
 } from './queries';
@@ -13,4 +12,3 @@ export const executeQueryArray = async queries => {
 
 export const dropTables = () => executeQueryArray([ dropMessagesTable ]);
 export const createTables = () => executeQueryArray([ createMessageTable ]);
-export const insertIntoTables = () => executeQueryArray([ insertMessages ]);
