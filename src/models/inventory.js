@@ -11,6 +11,7 @@ export class InventoryModel extends BaseModel {
       VALUES ($1, $2, $3)
       RETURNING id, ${columns}
     `;
+
     return this.pool.query(query, values);
   }
 
@@ -18,17 +19,20 @@ export class InventoryModel extends BaseModel {
     const columns = [];
     const values = [id];
 
-    Object.keys(data).forEach((column, i) => {
+    let paramId = 2;
+
+    Object.keys(data).forEach(column => {
       if (data[column] !== undefined) {
-        columns.push(`${column} = $${i + 2}`);
+        columns.push(`${column} = $${paramId}`);
         values.push(data[column]);
+        paramId += 1;
       }
     });
 
     const query = `
-      update ${this.table}
-      set ${columns.join(', ')}
-      where id = $1
+      UPDATE ${this.table}
+      SET ${columns.join(', ')}
+      WHERE id = $1
     `;
 
     return this.pool.query(query, values);
@@ -38,6 +42,7 @@ export class InventoryModel extends BaseModel {
     const query = `
       DELETE FROM ${this.table} WHERE id = $1
     `;
-    return this.pool.query(query, productId);
+
+    return this.pool.query(query, [productId]);
   }
 }
