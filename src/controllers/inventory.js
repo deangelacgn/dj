@@ -15,6 +15,7 @@ export const addProduct = async (req, res, next) => {
   const { name, available_quantity, cost_per_unit } = req.body;
   const columns = 'name, available_quantity, cost_per_unit';
   const values = [name, available_quantity, cost_per_unit];
+  
   try{
     const data = await inventoryModel.insertProduct(columns, values);
     res.status(200).json({ inventory: data.rows });
@@ -22,3 +23,29 @@ export const addProduct = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateInventory = async (req, res, next) => {
+  const { id, name, available_quantity, cost_per_unit } = req.body;
+  const values = { name, available_quantity, cost_per_unit };
+  
+  try{
+    const data = await inventoryModel.updateProductInfo(id, values);
+    res.status(200).json( { inventory: data.rows } );
+  } catch(error) {
+    next(error);
+  }
+};
+
+export const deleteProduct = async (req, res, next) => {
+  const { id } = req.body;
+  const column = 'id';
+  const value = id;
+
+  try{
+    const data = await InventoryModel.deleteProduct(column, value);
+    res.status(200).json({ inventory: data.rows });
+  } catch (error) {
+    next(error);
+  }
+};
+
