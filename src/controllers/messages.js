@@ -1,6 +1,6 @@
-import Model from '../models/model';
+import { MessagesModel } from '../models';
 
-const messagesModel = new Model('messages');
+const messagesModel = new MessagesModel();
 
 export const messagesPage = async (req, res, next) => {
   try {
@@ -16,7 +16,7 @@ export const addMessage = async (req, res, next) => {
   const columns = 'name, message';
   const values = [name, message];
   try {
-    const data = await messagesModel.insertWithReturn(columns, values);
+    const data = await messagesModel.insertMessage(columns, values);
     res.status(200).json({ messages: data.rows });
   } catch (err) {
     next(err);

@@ -7,11 +7,4 @@ export const createMessageTable = `
   )
 `;
 
-export const insertMessages = `
-  INSERT INTO  messages(name, message)
-  VALUES ('dj', 'some message'),
-        ('de', 'some other message')
-`;
-
-
 export const dropMessagesTable = 'DROP TABLE messages';

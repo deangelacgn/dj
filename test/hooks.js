@@ -1,12 +1,10 @@
 import {
   dropTables,
   createTables,
-  insertIntoTables,
-} from '../src/utils/queryFunctions';
+} from '../src/migrations/queryFunctions';
 
 beforeEach(async () => {
   await createTables();
-  await insertIntoTables();
 });
 
 afterEach(async () => {
