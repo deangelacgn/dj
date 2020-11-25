@@ -11,7 +11,7 @@ indexRouter.post('/messages', modifyMessage, performAsyncAction, addMessage);
 
 indexRouter.get('/inventory', listProducts);
 indexRouter.post('/inventory', addProduct);
-indexRouter.put('/inventory', updateProduct);
+indexRouter.patch('/inventory', updateProduct);
 indexRouter.delete('/inventory', deleteProduct);
 
 export default indexRouter;
