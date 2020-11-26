@@ -33,6 +33,7 @@ export class InventoryModel extends BaseModel {
       UPDATE ${this.table}
       SET ${columns.join(', ')}
       WHERE id = $1
+      RETURNING *
     `;
 
     return this.pool.query(query, values);
