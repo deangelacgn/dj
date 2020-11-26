@@ -42,6 +42,7 @@ export class InventoryModel extends BaseModel {
   async deleteProduct(productId) {
     const query = `
       DELETE FROM ${this.table} WHERE id = $1
+      RETURNING *
     `;
 
     return this.pool.query(query, [productId]);
