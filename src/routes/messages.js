@@ -4,7 +4,7 @@ import { modifyMessage, performAsyncAction } from '../middleware';
 
 const messagesRouter = express.Router();
 
-messagesRouter.get('/messages', messagesPage);
-messagesRouter.post('/messages', modifyMessage, performAsyncAction, addMessage);
+messagesRouter.get('/', messagesPage);
+messagesRouter.post('/', modifyMessage, performAsyncAction, addMessage);
 
 export default messagesRouter;

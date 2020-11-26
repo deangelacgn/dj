@@ -3,9 +3,9 @@ import { listProducts, addProduct, updateProduct, deleteProduct } from '../contr
 
 const inventoryRouter = express.Router();
 
-inventoryRouter.get('/inventory', listProducts);
-inventoryRouter.post('/inventory', addProduct);
-inventoryRouter.patch('/inventory', updateProduct);
-inventoryRouter.delete('/inventory', deleteProduct);
+inventoryRouter.get('/', listProducts);
+inventoryRouter.post('/', addProduct);
+inventoryRouter.patch('/', updateProduct);
+inventoryRouter.delete('/', deleteProduct);
 
 export default inventoryRouter;
