@@ -1,15 +1,12 @@
 import express from 'express';
-import { indexPage, messagesPage, addMessage } from '../controllers';
-import { listProducts, addProduct } from '../controllers';
-import { modifyMessage, performAsyncAction } from '../middleware';
+import { indexPage } from '../controllers';
+import inventoryRouter from './inventory';
+import messagesRouter from './messages';
 
 const indexRouter = express.Router();
 
 indexRouter.get('/', indexPage);
-indexRouter.get('/messages', messagesPage);
-indexRouter.post('/messages', modifyMessage, performAsyncAction, addMessage);
-
-indexRouter.get('/inventory', listProducts);
-indexRouter.post('/inventory', addProduct);
+indexRouter.use('/inventory', inventoryRouter);
+indexRouter.use('/messages', messagesRouter);
 
 export default indexRouter;

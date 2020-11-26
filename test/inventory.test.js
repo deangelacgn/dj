@@ -25,13 +25,10 @@ describe('Inventory', () => {
       .end((err, res) => {
         if (err) { return done(err); };
         expect(res.status).to.equal(200);
-        expect(res.body.inventory).to.be.instanceOf(Array);
-        res.body.inventory.forEach( product => {
-          expect(product).to.have.property('id');
-          expect(product).to.have.property('name', data.name);
-          expect(product).to.have.property('available_quantity').which.is.a('number').above(0).and.satisfy(Number.isInteger);
-          expect(product).to.have.property('cost_per_unit');
-        });
+        expect(res.body).to.have.property('id');
+        expect(res.body).to.have.property('name', data.name);
+        expect(res.body).to.have.property('available_quantity').which.is.a('number').above(0).and.satisfy(Number.isInteger);
+        expect(res.body).to.have.property('cost_per_unit');
         done();
       });
   });
