@@ -14,3 +14,5 @@ export class MessagesModel extends BaseModel {
     return this.pool.query(query, values);
   }
 }
+
+export const messagesModel = new MessagesModel();

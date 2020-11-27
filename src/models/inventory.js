@@ -1,6 +1,6 @@
 import { BaseModel } from './base';
 
-export class InventoryModel extends BaseModel {
+class InventoryModel extends BaseModel {
   constructor() {
     super('inventory');
   }
@@ -48,3 +48,5 @@ export class InventoryModel extends BaseModel {
     return this.pool.query(query, [productId]);
   }
 }
+
+export const inventoryModel = new InventoryModel();
