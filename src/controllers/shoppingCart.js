@@ -1,6 +1,4 @@
 import { shoppingCartModel } from '../models';
-import shoppingCartRouter from '../routes/shoppingCart';
-
 
 export const listItems = async (req, res, next) => {
   try {
@@ -43,7 +41,7 @@ export const removeItem = async (req, res, next) => {
   try {
     let data;
     if (clearEverything === undefined) {
-      data = await shoppingCartRouter.clear();
+      data = await shoppingCartModel.clear();
     } else {
       data = await shoppingCartModel.deleteItem(id);
     }
