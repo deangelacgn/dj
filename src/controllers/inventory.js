@@ -16,8 +16,8 @@ export const addProduct = async (req, res, next) => {
   
   try{
     const data = await inventoryModel.insertProduct(columns, values);
-    const [ addedProduct ] = data.rows;
-    res.status(200).json( addedProduct );
+    const [addedProduct] = data.rows;
+    res.status(200).json(addedProduct);
   } catch (error) {
     next(error);
   }
@@ -29,8 +29,8 @@ export const updateProduct = async (req, res, next) => {
   
   try{
     const data = await inventoryModel.updateProductInfo(id, values);
-    const [ updatedInfo ] = data.rows;
-    res.status(200).json( updatedInfo );
+    const [updatedInfo] = data.rows;
+    res.status(200).json(updatedInfo);
   } catch(error) {
     next(error);
   }
@@ -41,8 +41,8 @@ export const deleteProduct = async (req, res, next) => {
 
   try{
     const data = await inventoryModel.deleteProduct(id);
-    const [ deletedProduct ] = data.rows;
-    res.status(200).json( deletedProduct );
+    const [deletedProduct] = data.rows;
+    res.status(200).json(deletedProduct);
   } catch (error) {
     next(error);
   }

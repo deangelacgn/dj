@@ -17,19 +17,20 @@ export class ShoppingCartModel extends BaseModel {
 
   async removeItem(id) {
     const query = `
-    DELETE FROM ${this.table} WHERE id = $1
-    RETURNING *
+      DELETE FROM ${this.table} WHERE id = $1
+      RETURNING *
     `;
 
     return this.pool.query(query, [id]);
   }
 
   async updateItem(id, quantity) {
+    
     const query = `
-    UPDATE ${this.table}
-    SET quantity = $1
-    WHERE id = $2
-    RETURNING *
+      UPDATE ${this.table}
+      SET quantity = $1
+      WHERE id = $2
+      RETURNING *
     `;
 
     return this.pool.query(query, [quantity, id]);
