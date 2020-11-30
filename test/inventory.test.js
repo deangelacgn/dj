@@ -25,7 +25,7 @@ describe('Inventory', () => {
       .end((err, res) => {
         if (err) { return done(err); };
         expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('id');
+        expect(res.body).to.have.property('product_id');
         expect(res.body).to.have.property('name', data.name);
         expect(res.body).to.have.property('available_quantity').which.is.a('number').above(0).and.satisfy(Number.isInteger);
         expect(res.body).to.have.property('cost_per_unit');
