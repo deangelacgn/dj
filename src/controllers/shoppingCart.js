@@ -10,9 +10,9 @@ export const listItems = async (req, res, next) => {
 };
 
 export const addItem = async (req, res, next) => {
-  const { id, quantity } = req.body;
-  const columns = 'id, quantity';
-  const values = [id, quantity];
+  const { item_id, quantity } = req.body;
+  const columns = 'item_id, quantity';
+  const values = [item_id, quantity];
 
   try {
     const data = await shoppingCartModel.addItem(columns, values);
@@ -24,10 +24,10 @@ export const addItem = async (req, res, next) => {
 };
 
 export const updateItem = async (req, res, next) => {
-  const { id, quantity } = req.body;
+  const { item_id, quantity } = req.body;
 
   try {
-    const data = await shoppingCartModel.updateItem(id, quantity);
+    const data = await shoppingCartModel.updateItem(item_id, quantity);
     const [updatedItem] = data.rows;
     res.status(200).json(updatedItem);
   } catch (error) {
@@ -36,14 +36,14 @@ export const updateItem = async (req, res, next) => {
 };
 
 export const removeItem = async (req, res, next) => {
-  const { id, clearEverything } = req.body;
+  const { item_id, clearEverything } = req.body;
 
   try {
     let data;
     if (clearEverything === undefined) {
       data = await shoppingCartModel.clear();
     } else {
-      data = await shoppingCartModel.deleteItem(id);
+      data = await shoppingCartModel.deleteItem(item_id);
     }
     const { deletedItem } = data.rows;
     res.status(200).json(deletedItem);
