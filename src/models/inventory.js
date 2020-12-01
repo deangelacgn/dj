@@ -9,7 +9,7 @@ class InventoryModel extends BaseModel {
     const query = `
       INSERT INTO ${this.table}(${columns})
       VALUES ($1, $2, $3)
-      RETURNING id, ${columns}
+      RETURNING product_id, ${columns}
     `;
 
     return this.pool.query(query, values);
