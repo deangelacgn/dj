@@ -49,18 +49,17 @@ class InventoryModel extends BaseModel {
   }
 
   async searchProduct(searchPattern, numResults, offset) {
-    let searchData = searchPattern.replace("%", "\%");
-    searchData = searchData.replace("_", "\_");
+    let searchData = searchPattern.replace("%", "\\%");
+    searchData = searchData.replace("_", "\\_");
     searchData = searchData.split(" ");
+    searchData = searchData.map(word => `%${word}%`);
 
     const likeQueries = [];
+    const orderingByLikeQueries = [];
 
     for(let paramId=1; paramId <= searchData.length; paramId++) {
-      if (paramId !== searchData.length) {
-        likeQueries.push(`LIKE $${paramId} OR `);
-      } else{
-        likeQueries.push(`LIKE $${paramId} `);
-      }
+      likeQueries.push(`name LIKE $${paramId}`);
+      orderingByLikeQueries.push(`(name LIKE $${paramId})::int`);
     }
 
     searchData.push(numResults);
@@ -68,11 +67,11 @@ class InventoryModel extends BaseModel {
 
     const query = `
       SELECT name FROM ${this.table}
-      WHERE name
-      ${likeQueries.join()}
-      LIMIT $${likeQueries.length+1}
-      ORDER BY name ASC
-      OFFSET $${likeQueries.length+2} ROWS
+      WHERE
+      ${likeQueries.join(" OR ")} 
+      ORDER BY ${orderingByLikeQueries.join(" + ")} DESC, name ASC
+      LIMIT $${likeQueries.length+1} 
+      OFFSET $${likeQueries.length+2}
     `;
 
     return this.pool.query(query, searchData);
