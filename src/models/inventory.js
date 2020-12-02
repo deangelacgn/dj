@@ -47,6 +47,35 @@ class InventoryModel extends BaseModel {
 
     return this.pool.query(query, [productId]);
   }
+
+  async searchProduct(searchPattern, numResults, offset) {
+    let searchData = searchPattern.replace("%", "\\%");
+    searchData = searchData.replace("_", "\\_");
+    searchData = searchData.split(" ");
+    searchData = searchData.map(word => `%${word}%`);
+
+    const likeQueries = [];
+    const orderingByLikeQueries = [];
+
+    for(let paramId=1; paramId <= searchData.length; paramId++) {
+      likeQueries.push(`name LIKE $${paramId}`);
+      orderingByLikeQueries.push(`(name LIKE $${paramId})::int`);
+    }
+
+    searchData.push(numResults);
+    searchData.push(offset);
+
+    const query = `
+      SELECT name FROM ${this.table}
+      WHERE
+      ${likeQueries.join(" OR ")} 
+      ORDER BY ${orderingByLikeQueries.join(" + ")} DESC, name ASC
+      LIMIT $${likeQueries.length+1} 
+      OFFSET $${likeQueries.length+2}
+    `;
+
+    return this.pool.query(query, searchData);
+  }
 }
 
 export const inventoryModel = new InventoryModel();
