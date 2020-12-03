@@ -3,7 +3,7 @@ import { listProducts, addProduct, updateProduct, deleteProduct } from '../contr
 
 const inventoryRouter = express.Router();
 
-inventoryRouter.get('/', listProducts);
+inventoryRouter.get('/',listProducts);
 inventoryRouter.post('/', addProduct);
 inventoryRouter.patch('/', updateProduct);
 inventoryRouter.delete('/', deleteProduct);

@@ -9,12 +9,11 @@ export const listProducts = async (req, res, next) => {
   }
 };
 
-export const addProduct = async (req, res, next) => {
-  const { name, available_quantity, cost_per_unit } = req.body;
-  const columns = 'name, available_quantity, cost_per_unit';
-  const values = [name, available_quantity, cost_per_unit];
-  
+export const addProduct = async (req, res, next) => {  
   try{
+    const { name, available_quantity, cost_per_unit } = req.body;
+    const columns = 'name, available_quantity, cost_per_unit';
+    const values = [name, available_quantity, cost_per_unit];
     const data = await inventoryModel.insertProduct(columns, values);
     const [addedProduct] = data.rows;
     res.status(200).json(addedProduct);
@@ -23,11 +22,10 @@ export const addProduct = async (req, res, next) => {
   }
 };
 
-export const updateProduct = async (req, res, next) => {
-  const { product_id, name, available_quantity, cost_per_unit } = req.body;
-  const values = { name, available_quantity, cost_per_unit };
-  
+export const updateProduct = async (req, res, next) => {  
   try{
+    const { product_id, name, available_quantity, cost_per_unit } = req.body;
+    const values = { name, available_quantity, cost_per_unit };
     const data = await inventoryModel.updateProductInfo(product_id, values);
     const [updatedInfo] = data.rows;
     res.status(200).json(updatedInfo);
@@ -37,9 +35,8 @@ export const updateProduct = async (req, res, next) => {
 };
 
 export const deleteProduct = async (req, res, next) => {
-  const { product_id } = req.body;
-
   try{
+    const { product_id } = req.body;
     const data = await inventoryModel.deleteProduct(product_id);
     const [deletedProduct] = data.rows;
     res.status(200).json(deletedProduct);
