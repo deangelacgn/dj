@@ -1,5 +1,4 @@
 import express from 'express';
-import passport from 'passport';
 import { jwtGuard } from '../middleware';
 import { indexPage } from '../controllers';
 import inventoryRouter from './inventory';
