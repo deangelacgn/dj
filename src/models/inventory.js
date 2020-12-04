@@ -49,9 +49,10 @@ class InventoryModel extends BaseModel {
   }
 
   async searchProduct(searchPattern, numResults, offset) {
-    let searchData = searchPattern.replace("%", "\\%");
+    let searchData = searchPattern.replace(/%/g, "\\%");
     searchData = searchData.replace("_", "\\_");
     searchData = searchData.split(" ");
+    searchData = searchData.list(str => str.length !== 0);
     searchData = searchData.map(word => `%${word}%`);
 
     const likeQueries = [];
