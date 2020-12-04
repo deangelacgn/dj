@@ -1,11 +1,11 @@
 import passport from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { JWT_SECRET_KEY } from './settings';
+import { jwtSecretKey } from './settings';
 
 passport.use(
   new Strategy(
     {
-      secretOrKey: JWT_SECRET_KEY,
+      secretOrKey: jwtSecretKey,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     },
     async (token, done) => {
