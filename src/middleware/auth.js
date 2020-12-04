@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { jwtSecretKey } from './settings';
+import { jwtSecretKey } from '../settings';
 
 passport.use(
   new Strategy(

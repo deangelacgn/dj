@@ -1,7 +1,7 @@
 import express from 'express';
 import { jwtGuard } from '../middleware';
 import { indexPage } from '../controllers';
-import inventoryRouter from './inventory';
+import productsRouter from './products';
 import purchaseRouter from './purchase';
 import searchProductRouter from './searchProduct';
 import shoppingCartRouter from './shoppingCart';
@@ -11,7 +11,7 @@ import loginRouter from './login';
 const indexRouter = express.Router();
 
 indexRouter.get('/', indexPage);
-indexRouter.use('/inventory', jwtGuard(), inventoryRouter);
+indexRouter.use('/products', jwtGuard(), productsRouter);
 indexRouter.use('/shoppingCart', jwtGuard(), shoppingCartRouter);
 indexRouter.use('/purchase', jwtGuard(), purchaseRouter);
 indexRouter.use('/searchProduct', jwtGuard(), searchProductRouter);
