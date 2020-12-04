@@ -12,10 +12,10 @@ export const getTotalPurchaseCost = async (req, res, next) => {
 
 export const finishPurchase = async (req, res, next) => {
   try {
-    const { costumer_name, vendor_name } = req.body;
+    const { customer_name, vendor_name } = req.body;
     const timestamp = new Date();
-    const columns = 'costumer_name, vendor_name, timestamp';
-    const values = [costumer_name, vendor_name, timestamp];
+    const columns = 'customer_name, vendor_name, timestamp';
+    const values = [customer_name, vendor_name, timestamp];
     const total_cost = await purchaseModel.computeTotalCost();
 
     const [purchase_data] = await Promise.all([
@@ -24,7 +24,7 @@ export const finishPurchase = async (req, res, next) => {
     ]);
     return res.status(200).json({
       total_cost: total_cost,
-      costumer_name: costumer_name,
+      costumer_name: customer_name,
       vendor_name: vendor_name,
       purchase_id: purchase_data[0],
     });

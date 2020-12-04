@@ -25,7 +25,7 @@ export const loginUser = async (req, res, next) => {
     }
 
     const jwtBody = {
-      user_id: userData.user_id,
+      id: userData.id,
       username: userData.username,
       email: userData.email,
     };
@@ -40,11 +40,11 @@ export const loginUser = async (req, res, next) => {
 
 export const changePassword = async (req, res, next) => {
   try {
-    const { user_id, current_password, new_password } = req.body;
+    const { id, current_password, new_password } = req.body;
     let data = await userModel.select(
       'password',
-      ' WHERE user_id = $1',
-      [user_id],
+      ' WHERE id = $1',
+      [id],
     );
     const [userData] = data.rows;
 
@@ -54,7 +54,7 @@ export const changePassword = async (req, res, next) => {
       return res.status(401).json("Current password provided is invalid!");
     }
     const passwordHash = await bcrypt.hash(new_password, 10);
-    data = await userModel.updatePassword([user_id, passwordHash]);
+    data = await userModel.updatePassword([id, passwordHash]);
     return res.status(200).json("Successfully updated password!");
   } catch(error) {
     next(error);
@@ -80,7 +80,7 @@ export const registerUser = async (req, res, next) => {
     const [userData] = data.rows;
     return res.status(200).json( {
       message: 'Sign up successfully!',
-      user_id: userData.user_id,
+      id: userData.id,
       username: userData.username,
       email: userData.email,
     });
@@ -91,8 +91,8 @@ export const registerUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) => {
   try {
-    const { user_id } = req.body;
-    const data = await userModel.deleteUser(user_id);
+    const { id } = req.body;
+    const data = await userModel.deleteUser(id);
     const [deletedUser] = data;
     return res.status(200).json({ deletedUser });
   } catch(error) {
