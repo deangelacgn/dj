@@ -15,13 +15,13 @@ export const loginUser = async (req, res, next) => {
     const [userData] = data.rows;
 
     if (userData === undefined) {
-      res.status(401).json("Username or password invalid!");
+      return res.status(401).json("Username or password invalid!");
     }
 
     const validatePassword = await bcrypt.compare(password, userData.password);
     
     if(!validatePassword) {
-      res.status(401).json("Username or password invalid!");
+      return res.status(401).json("Username or password invalid!");
     }
 
     const jwtBody = {
@@ -31,7 +31,7 @@ export const loginUser = async (req, res, next) => {
     };
     const token = jwt.sign(jwtBody, jwtSecretKey, { expiresIn: jwtExpiration });
   
-    res.status(200).json({ token: token });
+    return res.status(200).json({ token: token });
 
   } catch(error) {
     next(error);
@@ -51,11 +51,11 @@ export const changePassword = async (req, res, next) => {
     const validatePassword = await bcrypt.compare(current_password, userData.password);
     
     if(!validatePassword) {
-      res.status(401).json("Current password provided is invalid!");
+      return res.status(401).json("Current password provided is invalid!");
     }
     const passwordHash = await bcrypt.hash(new_password, 10);
     data = await userModel.updatePassword([user_id, passwordHash]);
-    res.status(200).json("Successfully updated password!");
+    return res.status(200).json("Successfully updated password!");
   } catch(error) {
     next(error);
   }
@@ -71,7 +71,7 @@ export const registerUser = async (req, res, next) => {
 
     const data = await userModel.registerUser(columns, values);
     const [userData] = data.rows;
-    res.status(200).json( {
+    return res.status(200).json( {
       message: 'Sign up successfully!',
       user_id: userData.user_id,
       username: userData.username,
@@ -87,7 +87,7 @@ export const deleteUser = async (req, res, next) => {
     const { user_id } = req.body;
     const data = await userModel.deleteUser(user_id);
     const [deletedUser] = data;
-    res.status(200).json({ deletedUser });
+    return res.status(200).json({ deletedUser });
   } catch(error) {
     next(error);
   }
