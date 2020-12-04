@@ -1,8 +1,8 @@
 import { BaseModel } from './base';
 
-class InventoryModel extends BaseModel {
+class ProductsModel extends BaseModel {
   constructor() {
-    super('inventory');
+    super('products');
   }
 
   async insertProduct(columns, values) {
@@ -79,4 +79,4 @@ class InventoryModel extends BaseModel {
   }
 }
 
-export const inventoryModel = new InventoryModel();
+export const productsModel = new ProductsModel();
