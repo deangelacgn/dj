@@ -59,12 +59,19 @@ export const changePassword = async (req, res, next) => {
   } catch(error) {
     next(error);
   }
-
 };
 
 export const registerUser = async (req, res, next) => {
   try{
     const { username, email, password } = req.body;
+
+    if (username.includes('@')) {
+      return res.status(401).json("Username cannot contain character '@");
+    }
+    if (!email.includes('@')) {
+      return res.status(401).json("Invalid email!");
+    }
+
     const columns = 'username, email, password';
     const passwordHash = await bcrypt.hash(password, 10);
     const values = [username, email, passwordHash];
