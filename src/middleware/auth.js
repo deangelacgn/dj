@@ -17,3 +17,5 @@ passport.use(
     },
   ),
 );
+
+export const jwtGuard = () => passport.authenticate('jwt', { session: false });
