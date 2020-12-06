@@ -1,9 +1,9 @@
-export const createShoppingCarTable = `
-  DROP TABLE IF EXISTS shopping_car;
-  CREATE TABLE IF NOT EXISTS shopping_car (
-    item_id INTEGER NOT NULL,
+export const createShoppingCartTable = `
+  DROP TABLE IF EXISTS shopping_cart;
+  CREATE TABLE IF NOT EXISTS shopping_cart (
+    id INTEGER NOT NULL,
     quantity INTEGER NOT NULL
   )
 `;
 
-export const dropShoppingCarTable = `DROP TABLE shopping_car`;
+export const dropShoppingCartTable = `DROP TABLE shopping_cart`;

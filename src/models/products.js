@@ -1,15 +1,15 @@
 import { BaseModel } from './base';
 
-class InventoryModel extends BaseModel {
+class ProductsModel extends BaseModel {
   constructor() {
-    super('inventory');
+    super('products');
   }
 
   async insertProduct(columns, values) {
     const query = `
       INSERT INTO ${this.table}(${columns})
       VALUES ($1, $2, $3)
-      RETURNING product_id, ${columns}
+      RETURNING id, ${columns}
     `;
 
     return this.pool.query(query, values);
@@ -49,9 +49,10 @@ class InventoryModel extends BaseModel {
   }
 
   async searchProduct(searchPattern, numResults, offset) {
-    let searchData = searchPattern.replace("%", "\\%");
+    let searchData = searchPattern.replace(/%/g, "\\%");
     searchData = searchData.replace("_", "\\_");
     searchData = searchData.split(" ");
+    searchData = searchData.list(str => str.length !== 0);
     searchData = searchData.map(word => `%${word}%`);
 
     const likeQueries = [];
@@ -78,4 +79,4 @@ class InventoryModel extends BaseModel {
   }
 }
 
-export const inventoryModel = new InventoryModel();
+export const productsModel = new ProductsModel();

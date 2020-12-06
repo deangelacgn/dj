@@ -1,6 +1,6 @@
 import { BaseModel } from './base';
 import { shoppingCartModel } from './shoppingCart';
-import { inventoryModel } from './inventory';
+import { productsModel } from './products';
 
 class PurchaseModel extends BaseModel {
   constructor () {
@@ -10,7 +10,7 @@ class PurchaseModel extends BaseModel {
   async computeTotalCost() {
     const query = `
     SELECT SUM( quantity *  cost_per_unit) AS total FROM ${shoppingCartModel.table}
-    INNER JOIN ${inventoryModel.table} ON product_id =  item_id
+    INNER JOIN ${productsModel.table} ON product_id =  item_id
     `;
     const purchase_cost = await this.pool.query(query);
     return purchase_cost[0];
