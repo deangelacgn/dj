@@ -3,10 +3,12 @@ import {
   createTables,
 } from '../src/migrations/queryFunctions';
 
-beforeEach(async () => {
+before(async function() {
+  this.timeout(10000);
   await createTables();
 });
 
-afterEach(async () => {
+after(async function () {
+  this.timeout(10000);
   await dropTables();
 });
