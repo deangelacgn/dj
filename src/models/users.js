@@ -9,7 +9,7 @@ class UserModel extends BaseModel {
     const query = `
       INSERT INTO ${this.table}(${columns})
       VALUES ($1, $2, $3)
-      RETURNING user_id, ${columns}
+      RETURNING id, ${columns}
     `;
 
     return this.pool.query(query, values);
@@ -19,7 +19,7 @@ class UserModel extends BaseModel {
     const query = `
       UPDATE ${this.table}
       SET password = $1
-      WHERE user_id = $2
+      WHERE id = $2
       RETURNING *
     `;
     return this.pool.query(query, [id, password]);

@@ -10,7 +10,7 @@ passport.use(
     },
     async (token, done) => {
       try {
-        return done(null, token.user_id);
+        return done(null, token);
       } catch (error) {
         done(error);
       }

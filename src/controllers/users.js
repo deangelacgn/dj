@@ -1,4 +1,4 @@
-import { userModel } from '../controllers';
+import { userModel } from '../models';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { jwtSecretKey, jwtExpiration } from '../settings';
@@ -79,7 +79,7 @@ export const registerUser = async (req, res, next) => {
     const data = await userModel.registerUser(columns, values);
     const [userData] = data.rows;
     return res.status(200).json( {
-      message: 'Sign up successfully!',
+      message: 'Signed up successfully!',
       id: userData.id,
       username: userData.username,
       email: userData.email,
