@@ -40,9 +40,10 @@ export const removeItem = async (req, res, next) => {
     if (clearEverything === true) {
       data = await shoppingCartModel.clear();
     } else {
-      data = await shoppingCartModel.deleteItem(id);
+      data = await shoppingCartModel.removeItem(id);
     }
-    const { deletedItem } = data.rows;
+    const [deletedItem] = data.rows;
+
     return res.status(200).json(deletedItem);
   } catch(error) {
     next(error);
