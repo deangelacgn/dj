@@ -9,7 +9,7 @@ export class ShoppingCartModel extends BaseModel {
     const query = `
       INSERT INTO ${this.table}(${columns})
       VALUES ($1, $2)
-      RETURNING item_id, ${columns}
+      RETURNING id, ${columns}
     `;
 
     return this.pool.query(query, values);
@@ -17,7 +17,7 @@ export class ShoppingCartModel extends BaseModel {
 
   async removeItem(id) {
     const query = `
-      DELETE FROM ${this.table} WHERE item_id = $1
+      DELETE FROM ${this.table} WHERE id = $1
       RETURNING *
     `;
 
@@ -29,7 +29,7 @@ export class ShoppingCartModel extends BaseModel {
     const query = `
       UPDATE ${this.table}
       SET quantity = $1
-      WHERE item_id = $2
+      WHERE id = $2
       RETURNING *
     `;
 
