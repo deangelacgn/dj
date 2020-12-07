@@ -8,8 +8,8 @@ describe('Products', () => {
       email: 'janedoe@somemail.com',
       password: '12345',
     };
-    
-    await agent.post(`${BASE_URL}/user`).send(registerData);
+
+    await agent.post(`${BASE_URL}/user`).expect(200).send(registerData);
 
     const loginData = {
       user_login: 'janedoe@somemail.com',
@@ -19,6 +19,23 @@ describe('Products', () => {
     authToken = authResponse.body.token;
   });
 
+  it('post products', done => {
+    const data = { name: "product name", available_quantity: 1, cost_per_unit: 12.50 };
+    agent
+      .post(`${BASE_URL}/products`)
+      .set('Authorization', 'Bearer ' + authToken)
+      .send(data)
+      .expect(200)
+      .end((err, res) => {
+        if (err) { return done(err); };
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.property('id');
+        expect(res.body).to.have.property('name', data.name);
+        expect(res.body).to.have.property('available_quantity').which.is.a('number').above(0).and.satisfy(Number.isInteger);
+        expect(res.body).to.have.property('cost_per_unit');
+        done();
+      });
+  });
   it('get products', done => {
     agent
       .get(`${BASE_URL}/products`)
@@ -35,20 +52,29 @@ describe('Products', () => {
         done();
       });
   });
-  it('post products', done => {
-    const data = { name: "product name", available_quantity: 1, cost_per_unit: 12.50 };
+  it('search products', done => {
+
+    const searchQueryData = {
+      search_pattern: 'produ',
+      num_results: 1,
+      offset: 0,
+    };
+
     agent
-      .post(`${BASE_URL}/products`)
+      .get(`${BASE_URL}/searchProduct`)
       .set('Authorization', 'Bearer ' + authToken)
-      .send(data)
+      .query(searchQueryData)
       .expect(200)
-      .end((err, res) => {
-        if (err) { return done(err); };
+      .end((error, res) => {
+        if(error) { return done(error); };
         expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('id');
-        expect(res.body).to.have.property('name', data.name);
-        expect(res.body).to.have.property('available_quantity').which.is.a('number').above(0).and.satisfy(Number.isInteger);
-        expect(res.body).to.have.property('cost_per_unit');
+        const searchResults = res.body;
+        searchResults.forEach(searchResult => {
+          expect(searchResult).to.have.property('id');
+          expect(searchResult).to.have.property('name', 'product name'),
+          expect(searchResult).to.have.property('available_quantity', 1);
+          expect(searchResult).to.have.property('cost_per_unit', '12.50');
+        });
         done();
       });
   });

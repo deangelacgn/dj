@@ -52,7 +52,7 @@ class ProductsModel extends BaseModel {
     let searchData = searchPattern.replace(/%/g, "\\%");
     searchData = searchData.replace("_", "\\_");
     searchData = searchData.split(" ");
-    searchData = searchData.list(str => str.length !== 0);
+    searchData = searchData.filter(str => str.length !== 0);
     searchData = searchData.map(word => `%${word}%`);
 
     const likeQueries = [];
@@ -67,14 +67,14 @@ class ProductsModel extends BaseModel {
     searchData.push(offset);
 
     const query = `
-      SELECT name FROM ${this.table}
+      SELECT ${this.table}.*
+      FROM ${this.table}
       WHERE
       ${likeQueries.join(" OR ")} 
       ORDER BY ${orderingByLikeQueries.join(" + ")} DESC, name ASC
       LIMIT $${likeQueries.length+1} 
       OFFSET $${likeQueries.length+2}
     `;
-
     return this.pool.query(query, searchData);
   }
 }
