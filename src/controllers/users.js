@@ -40,7 +40,7 @@ export const loginUser = async (req, res, next) => {
 
 export const changePassword = async (req, res, next) => {
   try {
-    const { id, current_password, new_password } = req.body;
+    const { id, current_password, new_password, repeat_password } = req.body;
     let data = await userModel.select(
       'password',
       ' WHERE id = $1',
@@ -54,6 +54,13 @@ export const changePassword = async (req, res, next) => {
       return res.status(401).json("Current password provided is invalid!");
     }
     const passwordHash = await bcrypt.hash(new_password, 10);
+    
+    const validateNewPassword = await bcrypt.compare(repeat_password, passwordHash);
+
+    if(!validateNewPassword) {
+      return res.status(401).json("New password differs from its repeated entry!");
+    }
+
     data = await userModel.updatePassword([id, passwordHash]);
     return res.status(200).json("Successfully updated password!");
   } catch(error) {
