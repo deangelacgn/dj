@@ -63,6 +63,16 @@ class ProductsModel extends BaseModel {
       orderingByLikeQueries.push(`(name LIKE $${paramId})::int`);
     }
 
+    if (likeQueries.length === 0) {
+      likeQueries.push("true");
+    }
+
+    let orderingRules = orderingByLikeQueries.join(" + ");
+
+    if (orderingRules.length !== 0) {
+      orderingRules = orderingRules.concat(" DESC");
+    }
+
     searchData.push(numResults);
     searchData.push(offset);
 
@@ -71,7 +81,7 @@ class ProductsModel extends BaseModel {
       FROM ${this.table}
       WHERE
       ${likeQueries.join(" OR ")} 
-      ORDER BY ${orderingByLikeQueries.join(" + ")} DESC, name ASC
+      ORDER BY ${orderingRules} DESC, name ASC
       LIMIT $${likeQueries.length+1} 
       OFFSET $${likeQueries.length+2}
     `;
