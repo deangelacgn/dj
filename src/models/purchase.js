@@ -20,7 +20,7 @@ class PurchaseModel extends BaseModel {
     const query = `
     INSERT INTO ${this.table}(${columns})
     VALUES ($1, $2, $3)
-    RETURNING purchase_id, ${columns}
+    RETURNING id, ${columns}
     `;
 
     return this.pool.query(query, values);

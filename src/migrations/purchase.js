@@ -1,5 +1,4 @@
 export const createPurchaseHistoryTable = `
-  DROP TABLE IF EXISTS purchases;
   CREATE TABLE IF NOT EXISTS purchases(
     id SERIAL PRIMARY KEY,
     customer_name VARCHAR NOT NULL,

@@ -5,7 +5,7 @@ const shoppingCartRouter = express.Router();
 
 shoppingCartRouter.get('/', listItems);
 shoppingCartRouter.post('/', addItem);
-shoppingCartRouter.patch('/', updateItem);
+shoppingCartRouter.put('/', updateItem);
 shoppingCartRouter.delete('/', removeItem);
 
 export default shoppingCartRouter;
