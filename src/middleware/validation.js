@@ -1,9 +1,10 @@
 export const validateRequest = (schema, property) => {
   return (req, res, next) => {
-    const { error } = schema.validate(req[property], { abortEarly: false });
+    const { error, value } = schema.validate(req[property], { abortEarly: false });
     const isValid = error === undefined;
 
     if(isValid) {
+      req[property] = value;
       next();
     } else {
       const { details } = error;
