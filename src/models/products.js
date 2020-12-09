@@ -63,12 +63,12 @@ class ProductsModel extends BaseModel {
       orderingByLikeQueries.push(`(name LIKE $${paramId})::int`);
     }
 
-    let remainingParamIds = [1, 2]
+    let remainingParamIds = [1, 2];
 
     if (likeQueries.length === 0) {
       likeQueries.push("true");
     } else {
-      remainingParamIds = remainingParamIds.map(x => x + likeQueries.length)
+      remainingParamIds = remainingParamIds.map(x => x + likeQueries.length);
     }
 
     let orderingRules = orderingByLikeQueries.join(" + ");
