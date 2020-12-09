@@ -69,4 +69,18 @@ describe('Shopping Cart', () => {
         done();
       });
   });
+  it('delete nonexistent item id', done => {
+    const itemData = { id: 5, clearEverything: false };
+    agent
+      .delete(`${BASE_URL}/shoppingCart`)
+      .set('Authorization', 'Bearer ' + authToken)
+      .expect(404)
+      .send(itemData)
+      .end((error, res) => {
+        if(error) { return  done(error); };
+        expect(res.status).to.equal(404);
+        expect(res.body).to.have.property('message', 'Item id does not exist!');
+        done();
+      });
+  });
 });

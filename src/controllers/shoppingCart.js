@@ -44,6 +44,9 @@ export const removeItem = async (req, res, next) => {
     }
     const [deletedItem] = data.rows;
 
+    if (deletedItem === undefined) {
+      return res.status(404).json({ message: "Item id does not exist!" });
+    }
     return res.status(200).json(deletedItem);
   } catch(error) {
     next(error);
