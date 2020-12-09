@@ -11,14 +11,14 @@ export const executeQueryArray = async queries => {
 };
 
 export const dropTables = () => executeQueryArray([ 
+  dropShoppingCartTable,
   dropProductsTable,
   dropPurchaseHistoryTable,
   dropUsersTable,
-  dropShoppingCartTable,
 ]);
 export const createTables = () => executeQueryArray([
   createProductsTable,
+  createShoppingCartTable,
   createPurchaseHistoryTable,
   createUsersTable,
-  createShoppingCartTable,
 ]);
