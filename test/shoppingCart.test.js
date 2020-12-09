@@ -28,56 +28,53 @@ describe('Shopping Cart', () => {
       });
   });
   it('add item', done => {
-    const itemData = { product_id: 1, quantity: 50 };
+    const itemData = { quantity: 50 };
+    const productId = 1;
     agent
-      .post(`${BASE_URL}/shoppingCart`)
+      .post(`${BASE_URL}/shoppingCart/${productId}`)
       .set('Authorization', 'Bearer ' + authToken)
       .send(itemData)
       .end((error, res) => {
         if(error) { return done(error); };
         expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('product_id', 1);
         expect(res.body).to.have.property('quantity', 50);
         done();
       });
   });
   it('update item', done => {
-    const itemData = { product_id: 1, quantity: 20 };
+    const itemData = { quantity: 20 };
+    const productId = 1;
     agent
-      .put(`${BASE_URL}/shoppingCart`)
+      .put(`${BASE_URL}/shoppingCart/${productId}`)
       .set('Authorization', 'Bearer ' + authToken)
       .expect(200)
       .send(itemData)
       .end((error, res) => {
         if(error) { return done(error); };
         expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('product_id', 1);
         expect(res.body).to.have.property('quantity', 20);
         done();
       });
   });
   it('delete item', done => {
-    const itemData = { product_id: 1 , clearEverything: false };
+    const productId = 1;
     agent
-      .delete(`${BASE_URL}/shoppingCart`)
+      .delete(`${BASE_URL}/shoppingCart/${productId}`)
       .set('Authorization', 'Bearer ' + authToken)
       .expect(200)
-      .send(itemData)
       .end((error, res) => {
         if(error) { return done(error); };
         expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('product_id');
         expect(res.body).to.have.property('quantity');
         done();
       });
   });
   it('delete nonexistent item id', done => {
-    const itemData = { product_id: 5, clearEverything: false };
+    const productId = 15;
     agent
-      .delete(`${BASE_URL}/shoppingCart`)
+      .delete(`${BASE_URL}/shoppingCart/${productId}`)
       .set('Authorization', 'Bearer ' + authToken)
       .expect(404)
-      .send(itemData)
       .end((error, res) => {
         if(error) { return  done(error); };
         expect(res.status).to.equal(404);

@@ -11,7 +11,9 @@ export const listItems = async (req, res, next) => {
 
 export const addItem = async (req, res, next) => {
   try {
-    const { product_id, quantity } = req.body;
+    const { quantity } = req.body;
+    const { product_id } = req.params;
+
     const columns = 'product_id, quantity';
     const values = [product_id, quantity];
     const data = await shoppingCartModel.addItem(columns, values);
@@ -24,7 +26,9 @@ export const addItem = async (req, res, next) => {
 
 export const updateItem = async (req, res, next) => {
   try {
-    const { product_id, quantity } = req.body;
+    const { quantity } = req.body;
+    const { product_id } = req.params;
+
     const data = await shoppingCartModel.updateItem(product_id, quantity);
     const [updatedItem] = data.rows;
     return res.status(200).json(updatedItem);
@@ -35,18 +39,25 @@ export const updateItem = async (req, res, next) => {
 
 export const removeItem = async (req, res, next) => {
   try {
-    const { product_id, clearEverything } = req.body;
-    let data;
-    if (clearEverything === true) {
-      data = await shoppingCartModel.clear();
-    } else {
-      data = await shoppingCartModel.removeItem(product_id);
-    }
+    const { product_id } = req.params;
+
+    const data = await shoppingCartModel.removeItem(product_id);
     const [deletedItem] = data.rows;
 
     if (deletedItem === undefined) {
       return res.status(404).json({ message: "Item id does not exist!" });
     }
+    return res.status(200).json(deletedItem);
+  } catch(error) {
+    next(error);
+  }
+};
+
+export const clearCart = async (req, res, next) => {
+  try {
+    const data = await shoppingCartModel.clear();
+    const [deletedItem] = data.rows;
+    
     return res.status(200).json(deletedItem);
   } catch(error) {
     next(error);
