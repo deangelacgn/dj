@@ -1,5 +1,5 @@
 import { pool } from '../models/pool';
-import { dropProductsTable, createProductsTable } from './products';
+import { dropProductsTable, createProductsTable, populateProductsTable } from './products';
 import { createPurchaseHistoryTable, dropPurchaseHistoryTable } from './purchase';
 import { createUsersTable, dropUsersTable } from './users';
 import { createShoppingCartTable, dropShoppingCartTable } from './shoppingCart';
@@ -16,9 +16,14 @@ export const dropTables = () => executeQueryArray([
   dropPurchaseHistoryTable,
   dropUsersTable,
 ]);
+
 export const createTables = () => executeQueryArray([
   createProductsTable,
   createShoppingCartTable,
   createPurchaseHistoryTable,
   createUsersTable,
+]);
+
+export const populateTables = () => executeQueryArray([
+  populateProductsTable,
 ]);

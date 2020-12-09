@@ -1,4 +1,4 @@
-import { createTables, dropTables } from "../src/migrations/queryFunctions";
+import { createTables, dropTables, populateTables } from "../src/migrations/queryFunctions";
 import { agent, BASE_URL } from './setup';
 
 export const clearDatabase = () => {
@@ -10,6 +10,13 @@ export const clearDatabase = () => {
   after(async function() {
     this.timeout(10000);
     await dropTables();
+  });
+};
+
+export const populateDatabase = () => {
+  before(async function() {
+    this.timeout(10000);
+    await populateTables();
   });
 };
 
