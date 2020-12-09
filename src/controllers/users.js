@@ -40,7 +40,9 @@ export const loginUser = async (req, res, next) => {
 
 export const changePassword = async (req, res, next) => {
   try {
-    const { id, current_password, new_password } = req.body;
+    const { current_password, new_password } = req.body;
+    const id = req.user.id;
+
     let data = await userModel.select(
       'password',
       ' WHERE id = $1',
