@@ -1,10 +1,12 @@
 import { expect, agent, BASE_URL } from './setup';
-import { clearDatabase, createUser } from './utils';
+import { clearDatabase, createUser, populateDatabase } from './utils';
 
 describe('Products', () => {
   let authToken;
 
   clearDatabase();
+  populateDatabase();
+
   createUser((token) => {
     authToken = token;
   });
@@ -51,7 +53,7 @@ describe('Products', () => {
     };
 
     agent
-      .get(`${BASE_URL}/searchProduct`)
+      .get(`${BASE_URL}/products/search`)
       .set('Authorization', 'Bearer ' + authToken)
       .query(searchQueryData)
       .expect(200)
@@ -67,5 +69,43 @@ describe('Products', () => {
         });
         done();
       });
+  });
+  it('search pagination and ordering', async() => {
+    const searchQueries = [ {
+      search_pattern: " ",
+      num_results: 3,
+      offset: 0,
+    },
+    {
+      search_pattern: " ",
+      num_results: 3,
+      offset: 3,
+    },
+    {
+      search_pattern: " ",
+      num_results: 6,
+      offset: 0,
+    }];
+
+    const searchResults = [];
+
+    for (const searchQuery of searchQueries) {
+      const searchQueryResponse = await agent
+        .get(`${BASE_URL}/products/search`)
+        .set('Authorization', 'Bearer ' + authToken)
+        .query(searchQuery)
+        .expect(200);
+      searchResults.push(searchQueryResponse.body);
+    }
+
+    expect(searchResults[0].length).to.equal(3);
+    expect(searchResults[1].length).to.equal(3);
+    expect(searchResults[2].length).to.equal(6);
+
+    const firstSearchResults = searchResults[2].slice(0, 3);
+    const secondSearchResults = searchResults[2].slice(3);
+
+    expect(searchResults[0]).to.eql(firstSearchResults);
+    expect(searchResults[1]).to.eql(secondSearchResults);
   });
 });
