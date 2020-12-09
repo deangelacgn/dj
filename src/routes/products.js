@@ -1,18 +1,33 @@
 import express from 'express';
-import { 
+import {
   listProducts,
-  addProduct, 
+  addProduct,
   updateProduct, 
-  deleteProduct, 
+  deleteProduct,
   searchProduct } from '../controllers';
-
+import {
+  addProductSchema,
+  updateProductSchema,
+  deleteProductSchema,
+  searchProductSchema } from '../validation';
+import { validateRequest } from '../middleware';
 
 const productsRouter = express.Router();
 
-productsRouter.get('/',listProducts);
-productsRouter.get('/search', searchProduct);
-productsRouter.post('/', addProduct);
-productsRouter.patch('/', updateProduct);
-productsRouter.delete('/', deleteProduct);
+productsRouter.get('/',
+  listProducts);
+productsRouter.get('/search',
+  validateRequest(searchProductSchema,'query'),
+  searchProduct);
+productsRouter.post('/',
+  validateRequest(addProductSchema,'body'),
+  addProduct);
+productsRouter.patch('/',
+  validateRequest(updateProductSchema, 'body'),
+  updateProduct);
+productsRouter.delete('/',
+  validateRequest(deleteProductSchema, 'body'), 
+  deleteProduct);
+
 
 export default productsRouter;
