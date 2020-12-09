@@ -18,7 +18,7 @@ export const deleteProductSchema = Joi.object({
 });
 
 export const searchProductSchema = Joi.object({
-  search_pattern: Joi.string().min(2).max(500).required() ,
+  search_pattern: Joi.string().max(500).required() ,
   num_results: Joi.number().integer().positive().required(),
-  offset: Joi.number().integer().positive().required(),
+  offset: Joi.number().integer().positive().allow(0).required(),
 });

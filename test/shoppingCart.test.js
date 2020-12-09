@@ -72,7 +72,7 @@ describe('Shopping Cart', () => {
       });
   });
   it('delete nonexistent item id', done => {
-    const itemData = { id: 5, clearEverything: false };
+    const itemData = { product_id: 5, clearEverything: false };
     agent
       .delete(`${BASE_URL}/shoppingCart`)
       .set('Authorization', 'Bearer ' + authToken)
