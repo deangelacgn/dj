@@ -5,6 +5,8 @@ import { searchProductSchema } from '../validation';
 
 const searchProductRouter = express.Router();
 
-searchProductRouter.get('/', validateRequest(searchProductSchema, 'query'), searchProduct);
+searchProductRouter.get('/',
+  validateRequest(searchProductSchema, 'query'),
+  searchProduct);
 
 export default searchProductRouter;

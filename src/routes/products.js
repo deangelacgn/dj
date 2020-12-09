@@ -5,9 +5,16 @@ import { addProductSchema, updateProductSchema, deleteProductSchema } from '../v
 
 const productsRouter = express.Router();
 
-productsRouter.get('/',listProducts);
-productsRouter.post('/', validateRequest(addProductSchema,'body'), addProduct);
-productsRouter.patch('/', validateRequest(updateProductSchema, 'body'),updateProduct);
-productsRouter.delete('/', validateRequest(deleteProductSchema, 'body'), deleteProduct);
+productsRouter.get('/',
+  listProducts);
+productsRouter.post('/',
+  validateRequest(addProductSchema,'body'),
+  addProduct);
+productsRouter.patch('/',
+  validateRequest(updateProductSchema, 'body'),
+  updateProduct);
+productsRouter.delete('/',
+  validateRequest(deleteProductSchema, 'body'), 
+  deleteProduct);
 
 export default productsRouter;
