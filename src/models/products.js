@@ -52,7 +52,7 @@ class ProductsModel extends BaseModel {
     let searchData = searchPattern.replace(/%/g, "\\%");
     searchData = searchData.replace("_", "\\_");
     searchData = searchData.split(" ");
-    searchData = searchData.list(str => str.length !== 0);
+    searchData = searchData.filter(str => str.length !== 0);
     searchData = searchData.map(word => `%${word}%`);
 
     const likeQueries = [];
@@ -63,16 +63,31 @@ class ProductsModel extends BaseModel {
       orderingByLikeQueries.push(`(name LIKE $${paramId})::int`);
     }
 
+    let remainingParamIds = [1, 2];
+
+    if (likeQueries.length === 0) {
+      likeQueries.push("true");
+    } else {
+      remainingParamIds = remainingParamIds.map(x => x + likeQueries.length);
+    }
+
+    let orderingRules = orderingByLikeQueries.join(" + ");
+
+    if (orderingRules.length !== 0) {
+      orderingRules = orderingRules.concat(" DESC,");
+    }
+
     searchData.push(numResults);
     searchData.push(offset);
 
     const query = `
-      SELECT name FROM ${this.table}
+      SELECT ${this.table}.*
+      FROM ${this.table}
       WHERE
       ${likeQueries.join(" OR ")} 
-      ORDER BY ${orderingByLikeQueries.join(" + ")} DESC, name ASC
-      LIMIT $${likeQueries.length+1} 
-      OFFSET $${likeQueries.length+2}
+      ORDER BY ${orderingRules} name ASC
+      LIMIT $${remainingParamIds[0]} 
+      OFFSET $${remainingParamIds[1]}
     `;
 
     return this.pool.query(query, searchData);

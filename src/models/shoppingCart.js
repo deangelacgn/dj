@@ -9,31 +9,31 @@ export class ShoppingCartModel extends BaseModel {
     const query = `
       INSERT INTO ${this.table}(${columns})
       VALUES ($1, $2)
-      RETURNING id, ${columns}
+      RETURNING product_id, ${columns}
     `;
 
     return this.pool.query(query, values);
   }
 
-  async removeItem(id) {
+  async removeItem(productId) {
     const query = `
-      DELETE FROM ${this.table} WHERE id = $1
+      DELETE FROM ${this.table} WHERE product_id = $1
       RETURNING *
     `;
 
-    return this.pool.query(query, [id]);
+    return this.pool.query(query, [productId]);
   }
 
-  async updateItem(id, quantity) {
+  async updateItem(productId, quantity) {
     
     const query = `
       UPDATE ${this.table}
       SET quantity = $1
-      WHERE id = $2
+      WHERE product_id = $2
       RETURNING *
     `;
 
-    return this.pool.query(query, [quantity, id]);
+    return this.pool.query(query, [quantity, productId]);
   }
 
   async clear() {

@@ -10,7 +10,7 @@ shoppingCartRouter.get('/',
 shoppingCartRouter.post('/',
   validateRequest(addItemSchema, 'body'),
   addItem);
-shoppingCartRouter.patch('/',
+shoppingCartRouter.put('/',
   validateRequest(updateItemSchema, 'body'),
   updateItem);
 shoppingCartRouter.delete('/',

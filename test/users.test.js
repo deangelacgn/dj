@@ -1,6 +1,8 @@
 import { expect, agent, BASE_URL } from './setup';
+import { clearDatabase } from './utils';
 
 describe('Users', () => {
+  clearDatabase();
   it('register user', done => {
     const newUserData = {
       username: 'JohnDoe',

@@ -1,7 +1,6 @@
 export const createShoppingCartTable = `
-  DROP TABLE IF EXISTS shopping_cart;
   CREATE TABLE IF NOT EXISTS shopping_cart (
-    id INTEGER NOT NULL,
+    product_id INTEGER UNIQUE NOT NULL REFERENCES products (id),
     quantity INTEGER NOT NULL
   )
 `;

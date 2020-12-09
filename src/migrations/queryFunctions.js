@@ -1,5 +1,5 @@
 import { pool } from '../models/pool';
-import { dropProductsTable, createProductsTable } from './products';
+import { dropProductsTable, createProductsTable, populateProductsTable } from './products';
 import { createPurchaseHistoryTable, dropPurchaseHistoryTable } from './purchase';
 import { createUsersTable, dropUsersTable } from './users';
 import { createShoppingCartTable, dropShoppingCartTable } from './shoppingCart';
@@ -11,14 +11,19 @@ export const executeQueryArray = async queries => {
 };
 
 export const dropTables = () => executeQueryArray([ 
+  dropShoppingCartTable,
   dropProductsTable,
   dropPurchaseHistoryTable,
   dropUsersTable,
-  dropShoppingCartTable,
 ]);
+
 export const createTables = () => executeQueryArray([
   createProductsTable,
+  createShoppingCartTable,
   createPurchaseHistoryTable,
   createUsersTable,
-  createShoppingCartTable,
+]);
+
+export const populateTables = () => executeQueryArray([
+  populateProductsTable,
 ]);
