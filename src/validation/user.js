@@ -8,6 +8,7 @@ const validatePassword = () => {
 };
 
 export const userRegistrationSchema = Joi.object({
+  name: Joi.string().min(4). max(100).required(),
   username: Joi.string().alphanum().min(2).max(30).required(),
   email: Joi.string().email({
     minDomainSegments: 2,

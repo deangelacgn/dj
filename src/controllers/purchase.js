@@ -12,7 +12,9 @@ export const getTotalPurchaseCost = async (req, res, next) => {
 
 export const finishPurchase = async (req, res, next) => {
   try {
-    const { customer_name, vendor_name } = req.body;
+    const { customer_name } = req.body;
+    const vendor_name = req.user.name;
+
     const timestamp = new Date();
     const columns = 'customer_name, vendor_name, timestamp';
     const values = [customer_name, vendor_name, timestamp];
