@@ -2,6 +2,7 @@ import { userModel, secretCodeModel } from '../models';
 import nodemailer from 'nodemailer';
 import { nodeMailerEmail, nodeMailerPassword, resetPasswordPage } from '../settings';
 import fs from 'fs';
+import bcrypt from 'bcrypt';
 
 export const generateSecretCode = () => {
   const secretCode = Math.floor(100000 + Math.random() * 900000);
@@ -13,7 +14,7 @@ export const sendEmailForgotPassword = async (req, res, next) => {
     const { email } = req.body;
 
     const data = await userModel.select(
-      'name, email',
+      'id, name, email',
       ' WHERE email = $1',
       [email],
     );
@@ -32,8 +33,9 @@ export const sendEmailForgotPassword = async (req, res, next) => {
     });
 
     const secretCode = generateSecretCode();
+    const expirationDate = new Date(Date.now() + 600000);
 
-    await secretCodeModel.addSecretCode(secretCode);
+    await secretCodeModel.addSecretCode([secretCode, userData.id, expirationDate]);
 
     let emailTemplate = fs.readFileSync('./src/templates/forgotPasswordEmail.html', 'utf-8');
     emailTemplate = emailTemplate.replace("{USERNAME}", userData.name);
@@ -52,6 +54,27 @@ export const sendEmailForgotPassword = async (req, res, next) => {
 
     return res.status(204).end();
   } catch(error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  try {
+    const { secret_code, new_password } = req.body;
+
+    let data = await secretCodeModel.select('user_id, code', 'WHERE code = $1', [secret_code]);
+    const [codeData] = data.rows;
+    
+    if(codeData === undefined) {
+      return res.status(400).json({ message: "Invalid secret code!" });
+    }
+
+    const passwordHash = bcrypt.hash(new_password, 10);
+
+    data = await userModel.updatePassword(codeData.user_id, passwordHash);
+
+    return res.status(200).json("Successfully updated password!");
+  } catch (error) {
     next(error);
   }
 };
