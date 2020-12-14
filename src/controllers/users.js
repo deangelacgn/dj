@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { jwtSecretKey, jwtExpiration } from '../settings';
 
+
 export const loginUser = async (req, res, next) => {
   try {
     const { user_login, password } = req.body;
