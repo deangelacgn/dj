@@ -7,7 +7,7 @@ class SecretCodeModel extends BaseModel {
 
   async addSecretCode(values) {
     const query = `
-      INSERTO INTO ${this.table}(code)
+      INSERTO INTO ${this.table}(code, user_id, expiration_date)
       VALUES ($1, $2, $3)
       RETURNING *
     `;
