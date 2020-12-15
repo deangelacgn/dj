@@ -35,7 +35,7 @@ export const sendEmailForgotPassword = async (req, res, next) => {
     const secretCode = generateSecretCode();
     const expirationDate = new Date(Date.now() + 600000);
 
-    await secretCodeModel.addSecretCode([secretCode, userData.id, expirationDate]);
+    await secretCodeModel.addSecretCode(secretCode, userData.id, expirationDate);
 
     let emailTemplate = fs.readFileSync('./src/templates/forgotPasswordEmail.html', 'utf-8');
     emailTemplate = emailTemplate.replace("{USERNAME}", userData.name);

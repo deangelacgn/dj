@@ -5,14 +5,14 @@ class SecretCodeModel extends BaseModel {
     super('secret_codes');
   }
 
-  async addSecretCode(values) {
+  async addSecretCode(secretCode, user_id, expirationDate) {
     const query = `
       INSERTO INTO ${this.table}(code, user_id, expiration_date)
       VALUES ($1, $2, $3)
       RETURNING *
     `;
 
-    return this.pool.query(query, values);
+    return this.pool.query(query, [secretCode, user_id, expirationDate]);
   }
 
   async deleteSecretCode(id) {
