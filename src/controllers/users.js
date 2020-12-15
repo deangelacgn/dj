@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { jwtSecretKey, jwtExpiration } from '../settings';
 
+
 export const loginUser = async (req, res, next) => {
   try {
     const { user_login, password } = req.body;
@@ -26,6 +27,7 @@ export const loginUser = async (req, res, next) => {
 
     const jwtBody = {
       id: userData.id,
+      name: userData.name,
       username: userData.username,
       email: userData.email,
     };
@@ -67,7 +69,7 @@ export const changePassword = async (req, res, next) => {
 
 export const registerUser = async (req, res, next) => {
   try{
-    const { username, email, password } = req.body;
+    const { name, username, email, password } = req.body;
 
     if (username.includes('@')) {
       return res.status(401).json("Username cannot contain character '@");
@@ -76,9 +78,9 @@ export const registerUser = async (req, res, next) => {
       return res.status(401).json("Invalid email!");
     }
 
-    const columns = 'username, email, password';
+    const columns = 'name, username, email, password';
     const passwordHash = await bcrypt.hash(password, 10);
-    const values = [username, email, passwordHash];
+    const values = [name, username, email, passwordHash];
 
     const data = await userModel.registerUser(columns, values);
     const [userData] = data.rows;
@@ -87,6 +89,7 @@ export const registerUser = async (req, res, next) => {
       id: userData.id,
       username: userData.username,
       email: userData.email,
+      name: userData.name,
     });
   } catch(error) {
     next(error);

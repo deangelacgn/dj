@@ -5,6 +5,7 @@ describe('Users', () => {
   clearDatabase();
   it('register user', done => {
     const newUserData = {
+      name: 'John Doe',
       username: 'JohnDoe',
       email: 'johndoe@somemail.com',
       password: '12345',
@@ -19,8 +20,10 @@ describe('Users', () => {
         expect(res.status).to.equal(200);
         expect(res.body.message).to.equal('Signed up successfully!');
         expect(res.body).to.have.property('id');
+        expect(res.body).to.have.property('name');
         expect(res.body).to.have.property('username');
         expect(res.body).to.have.property('email');
+        expect(res.body.name).to.equal('John Doe');
         expect(res.body.username).to.equal('JohnDoe');
         expect(res.body.email).to.equal('johndoe@somemail.com');
         done();

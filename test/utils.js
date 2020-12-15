@@ -23,6 +23,7 @@ export const populateDatabase = () => {
 export const createUser = (setAuthToken) => {
   before(async function() {
     const registerData = {
+      name: 'Jane Doe',
       username: 'janedoe',
       email: 'janedoe@somemail.com',
       password: '12345',

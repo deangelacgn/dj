@@ -8,7 +8,7 @@ class UserModel extends BaseModel {
   async registerUser(columns, values) {
     const query = `
       INSERT INTO ${this.table}(${columns})
-      VALUES ($1, $2, $3)
+      VALUES ($1, $2, $3, $4)
       RETURNING id, ${columns}
     `;
 

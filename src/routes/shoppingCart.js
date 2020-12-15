@@ -1,20 +1,26 @@
 import express from 'express';
-import { listItems, addItem,  updateItem, removeItem } from '../controllers';
+import { 
+  listItems,
+  addItem, 
+  updateItem,
+  removeItem,
+  clearCart } from '../controllers';
 import { validateRequest } from '../middleware';
-import { addItemSchema, removeItemSchema, updateItemSchema } from '../validation';
+import { addItemSchema, updateItemSchema } from '../validation';
 
 const shoppingCartRouter = express.Router();
 
 shoppingCartRouter.get('/',
   listItems);
-shoppingCartRouter.post('/',
+shoppingCartRouter.post('/:product_id',
   validateRequest(addItemSchema, 'body'),
   addItem);
-shoppingCartRouter.put('/',
+shoppingCartRouter.put('/:product_id',
   validateRequest(updateItemSchema, 'body'),
   updateItem);
-shoppingCartRouter.delete('/',
-  validateRequest(removeItemSchema, 'body'),
+shoppingCartRouter.delete('/:product_id',
   removeItem);
+shoppingCartRouter.delete('/',
+  clearCart);
 
 export default shoppingCartRouter;
