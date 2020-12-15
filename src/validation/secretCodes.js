@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { validatePassword } from './user';
+import { validatePassword } from './utils';
 
 export const sendEmailSecretCodeSchema = Joi.object({
   email: Joi.string().email({

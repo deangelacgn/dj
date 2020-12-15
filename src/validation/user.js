@@ -1,11 +1,5 @@
 import Joi from 'joi';
-
-export const validatePassword = () => {
-  return Joi
-    .string()
-    .pattern(new RegExp('^[a-zA-Z0-9!"#$%&\'*\\(\\)=~+><?\\{\\}]{3,30}$'))
-    .required();
-};
+import { validatePassword } from './utils';
 
 export const userRegistrationSchema = Joi.object({
   name: Joi.string().min(4). max(100).required(),
