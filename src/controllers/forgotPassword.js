@@ -73,7 +73,7 @@ export const resetPassword = async (req, res, next) => {
 
     data = await userModel.updatePassword(codeData.user_id, passwordHash);
 
-    return res.status(200).json("Successfully updated password!");
+    return res.status(200).json({ message: "Successfully updated password!" });
   } catch (error) {
     next(error);
   }
